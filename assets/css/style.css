@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'estilo_letra_1';
+    src: url('../fonts/Poppins-Light.ttf');
+}
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+nav{
+    background: linear-gradient(90deg, rgb(20%, 40%, 60%), rgb(22, 83, 172));
+    height: 80px;
+    width: 100%;
+}
+.enlace{
+    position: absolute;
+    padding: 20px 50px;
+}
+
+.logo{
+    margin: 5px;
+    height: 70px;
+    width: 70px;
+}
+.nomLogo{
+    color: #fff;
+    font-size: 20px;
+    font-family: 'estilo_letra_1';
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+nav ul li a{
+    color: #fff;
+    font-size: 18px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    text-decoration-line: none;
+    font-family: 'estilo_letra_1';
+}
+li a.active, li a:hover{
+    background: #3c8dbc;
+    color: #fff;
+    transition: .5s;
+    text-decoration-line: none;
+}
+.checkbtn{
+    font-size: 30px;
+    color: #fff;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#check{
+    display: none;
+}
+.tipo-botones{
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-family: 'estilo_letra_1';
+}
+.container{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+#calendar{
+    font-family: 'estilo_letra_1';
+}
+
+@media (max-width:952px){
+    .enlace{
+        padding-left: 20px;
+    }
+    nav ul li a{
+        font-size: 16px;
+    }
+}
+@media (max-width:858px){
+    .checkbtn{
+        display: block;
+    }
+    ul{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(90deg, rgb(20%, 40%, 60%), rgb(22, 83, 172));
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transform: all .5s;
+    }
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+    nav ul li a{
+        font-size: 20px;
+    }
+    li a.hover, li a.active{
+        background: none;
+        color: #fff;
+    }
+    #check:checked ~ ul{
+        left: 0;
+    }
+}

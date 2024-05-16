@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,15 +18,18 @@
             </div>
             <p class="txt-1">Agenda Electronica</p>
         </div>
-        <form class="form" >
+        <form method="post" action="" class="form" >
             <h2>Login</h2>
+            <?php 
+                include '../controller/controladorLogin.php';
+            ?>
             <div class="inputs">
-                <input type="text" class="box" id="user" placeholder="Ingrese tu usuario">
+                <input type="text" class="box" name="user" id="user" placeholder="Ingrese tu usuario">
                 <i class="bx2 fa fa-user fa-2x"></i>
-                <input type="password" class="box pass" id="pass" placeholder="Ingrese tu contraseña">
+                <input type="password" class="box pass" name="pass"  id="pass" placeholder="Ingrese tu contraseña">
                 <i class="bx2 fa fa-lock fa-2x"></i>
                 <i class="bx fa fa-eye"></i>
-                <input type="submit" value="Iniciar Sesión" class="submit">
+                <input type="submit" name="btnIngresar" value="Iniciar Sesión" class="submit">
             </div>
         </form>
     </div>
