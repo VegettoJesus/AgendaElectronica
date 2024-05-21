@@ -34,5 +34,27 @@
         </form>
     </div>
     <script src="../assets/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      <?php
+        if(isset($_GET['error']) && $_GET['error'] === 'access_denied') {
+        ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Acceso Denegado',
+            text: 'Usuario o contraseña incorrectos'
+        });
+        <?php
+        } elseif(isset($_GET['error']) && $_GET['error'] === 'empty_fields') {
+        ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Campos Vacíos',
+            text: 'Por favor, completa todos los campos'
+        });
+        <?php
+        }
+        ?>
+    </script>
 </body>
 </html>

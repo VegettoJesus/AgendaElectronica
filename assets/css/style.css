@@ -79,6 +79,9 @@ li a.active, li a:hover{
 #calendar{
     font-family: 'estilo_letra_1';
 }
+.tipoLetra{
+    font-family: 'estilo_letra_1';
+}
 
 @media (max-width:952px){
     .enlace{
