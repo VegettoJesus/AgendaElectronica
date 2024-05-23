@@ -31,7 +31,7 @@ session_start();
           ?>
         </b>
         <ul>
-            <li><a class="active" href="#">Calendario</a></li>
+            <li><a class="active" href="../vistas/calendarioMisTareas.php">Calendario</a></li>
             <li><a href="../vistas/tareas.php">Tareas</a></li>
             <li><a href="../controller/cerrarSesion.php">Cerrar Sesión</a></li>
         </ul>
@@ -39,8 +39,8 @@ session_start();
   <body>
     <div class="container">
         <div class="tipo-botones">
-            <button type="button" class="btn btn-primary">Mis tareas</button>
-            <button type="button" class="btn btn-primary">General</button>
+            <button type="input" class="btn btn-primary active" id="button-tareas-mis" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioMisTareas.php" style="color: white;text-decoration-line: none;padding: 8px;">Mis Tareas</a></button>
+            <button type="input" class="btn btn-primary" id="button-tareas-general" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioGeneral.php" style="color: white;text-decoration-line: none;padding: 8px;">General</a></button>
         </div>
         <div id="calendar"></div>
     </div>
@@ -178,6 +178,7 @@ session_start();
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-warning" id="btnEditarEvento">Editar</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminarEvento" style="display: none;">Eliminar</button>
                 </div>
             </div>
         </div>

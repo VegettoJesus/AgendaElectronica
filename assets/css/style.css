@@ -97,6 +97,7 @@ li a.active, li a:hover{
 .estado-ninguno {
     color: black;
 }
+
 @media (max-width:952px){
     .enlace{
         padding-left: 20px;

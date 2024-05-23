@@ -129,6 +129,13 @@ $('#modalEvento').on('show.bs.modal', function (event) {
                 $('#modalEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
                 $('#modalEvento').find('#noImagen').remove();
             }
+
+            if (agenda.tipo === 'MIS TAREAS') {
+                $('#btnEliminarEvento').show();
+                $('#btnEliminarEvento').data('op', agenda.Op);
+            } else {
+                $('#btnEliminarEvento').hide();
+            }
             
             var estadoEvento = agenda.estado;
             $('#modalEvento').find('#estadoV').removeClass('estado-inicio estado-proceso estado-finalizado estado-ninguno');
@@ -261,3 +268,50 @@ $('#modalEditarEvento').on('show.bs.modal', function (event) {
     });
 
 });
+$('#modalEvento').on('click', '#btnEliminarEvento', function() {
+    var op = $(this).data('op'); 
+  
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esto",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '../controller/eliminarTarea.php',
+          type: 'POST',
+          data: { op: op },
+          dataType: 'json',
+          success: function(data) {
+            if (data.success) {
+              Swal.fire(
+                'Eliminado',
+                'La tarea ha sido eliminada.',
+                'success'
+              );
+              location.reload();
+            } else {
+              Swal.fire(
+                'Error',
+                'Hubo un problema al eliminar la tarea.',
+                'error'
+              );
+            }
+          },
+          error: function(xhr, status, error) {
+            Swal.fire(
+              'Error',
+              'Hubo un problema al eliminar la tarea.',
+              'error'
+            );
+            console.error(xhr.responseText);
+          }
+        });
+      }
+    });
+  });
