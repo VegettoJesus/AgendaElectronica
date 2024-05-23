@@ -15,71 +15,143 @@ $(document).ready(function() {
       $('#exampleModal').modal('show');
   });
 
-  $.ajax({
-      url: "../controller/getTareas.php",
-      type: "POST",
-      dataType: "json",
-      success: function(data) {
-          $('#tablaAgenda').DataTable({
-              "processing": true,
-              "data": data,
-              "columns": [
-                  {"data": "Op"},
-                  {"data": "titulo"},
-                  {"data": "tipo"},
-                  {"data": "personal"},
-                  {
-                    "data": null,
-                    "render": function(data, type, row) {
-                        let fechaDesde = row.fechaDesde;
-                        let fechaHasta = row.fechaHasta;
-                        
-                        return fechaDesde + ' - ' + fechaHasta;
-                    }
-                  },
-                  {
-                    "data": null,
-                    "render": function(data, type, row) {
-                        let horaDesde = row.horaDesde;
-                        let horaHasta = row.horaHasta;
-                        
-                        return horaDesde + ' - ' + horaHasta;
-                    }
-                  },
-                  {"data": "descripcion", "render": function(data, type, row) {
-                    return (data.length > 5) ? data.substring(0, 5) + "..." : data;
-                  }},
-                  {"data": "estado", "render": function(data, type, row) {
-                    var estado = "";
-                    switch (data) {
-                        case 0:
-                            estado = "<span>NINGUNO</span>";
-                            break;
-                        case 1:
-                            estado = "<span style='color: red;'>INICIO</span>";
-                            break;
-                        case 2:
-                            estado = "<span style='color: blue;'>EN PROCESO</span>";
-                            break;
-                        case 3:
-                            estado = "<span style='color: green;'>FINALIZADO</span>";
-                            break;
-                        default:
-                            estado = data;
-                    }
-                    return estado;
-                  }},
-                  {"data": null, "render": function(data, type, row) {
-                    return '<button class="btn btn-primary btn-sm boton-editar" type="button" data-op="' + row.Op + '">Editar</button> <button class="btn btn-danger btn-sm boton-eliminar" type="button" data-op="' + row.Op + '">Eliminar</button>';
-                  }}
-              ]
-          });
-          
-      },
-      error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-      }
+  document.getElementById('btnBuscar').addEventListener('click', function() {
+    const pers = document.getElementById('pers').value;
+    const fechaD = document.getElementById('fechaD').value;
+    const fechaH = document.getElementById('fechaH').value;
+    console.log(pers," ",fechaD," ",fechaH)
+
+    $.ajax({
+        url: "../controller/listar.php",
+        type: "POST",
+        data: {
+            pers: pers,
+            fechaD: fechaD,
+            fechaH: fechaH
+        },
+        dataType: "json",
+        success: function(data) {
+            $('#tablaAgenda').DataTable().clear().destroy();
+            $('#tablaAgenda').DataTable({
+                "processing": true,
+                "data": data,
+                "columns": [
+                    {"data": "Op"},
+                    {"data": "titulo"},
+                    {"data": "tipo"},
+                    {"data": "personal"},
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            let fechaDesde = row.fechaDesde;
+                            let fechaHasta = row.fechaHasta;
+                            return fechaDesde + ' - ' + fechaHasta;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            let horaDesde = row.horaDesde;
+                            let horaHasta = row.horaHasta;
+                            return horaDesde + ' - ' + horaHasta;
+                        }
+                    },
+                    {"data": "descripcion", "render": function(data, type, row) {
+                        return (data.length > 5) ? data.substring(0, 5) + "..." : data;
+                    }},
+                    {"data": "estado", "render": function(data, type, row) {
+                        var estado = "";
+                        switch (data) {
+                            case 0:
+                                estado = "<span>NINGUNO</span>";
+                                break;
+                            case 1:
+                                estado = "<span style='color: red;'>INICIO</span>";
+                                break;
+                            case 2:
+                                estado = "<span style='color: blue;'>EN PROCESO</span>";
+                                break;
+                            case 3:
+                                estado = "<span style='color: green;'>FINALIZADO</span>";
+                                break;
+                            case null:
+                                estado = "<span>NINGUNO</span>";
+                                break;
+                        }
+                        return estado;
+                    }},
+                    {"data": null, "render": function(data, type, row) {
+                        return '<button class="btn btn-warning btn-sm boton-editar" type="button" data-op="' + row.Op + '">Editar</button> <button class="btn btn-danger btn-sm boton-eliminar" type="button" data-op="' + row.Op + '">Eliminar</button>';
+                    }}
+                ]
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
   });
+
+});
+
+$('#forRegistrarTarea2').submit(function(event) {
+  var titulo = $('#titulo').val().trim();
+  var fechaDesde = $('#fechaDesde').val().trim();
+  var fechaHasta = $('#fechaHasta').val().trim();
+  var horaDesde = $('#horaDesde').val().trim();
+  var horaHasta = $('#horaHasta').val().trim();
+  var tipo = $('#tipo').val().trim();
+  var personal = $('#personal').val().trim();
+
+  if (titulo === '' || fechaDesde === '' || fechaHasta === '' || horaDesde === '' || horaHasta === '' || tipo === '') {
+
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+      });
+      if(tipo === "Personal"){
+        if (personal === ''){
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+          });
+        }
+        event.preventDefault();
+      }
+
+      event.preventDefault();
+  }
+});
+$('#forEditarTarea2').submit(function(event) {
+  var titulo = $('#tituloE').val().trim();
+  var fechaDesde = $('#fechaDesdeE').val().trim();
+  var fechaHasta = $('#fechaHastaE').val().trim();
+  var horaDesde = $('#horaDesdeE').val().trim();
+  var horaHasta = $('#horaHastaE').val().trim();
+  var tipo = $('#tipoE').val().trim();
+  var personal = $('#personalE').val().trim();
+
+  if (titulo === '' || fechaDesde === '' || fechaHasta === '' || horaDesde === '' || horaHasta === '' || tipo === '') {
+
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+      });
+      if(tipo === "Personal"){
+        if (personal === ''){
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+          });
+        }
+        event.preventDefault();
+      }
+      event.preventDefault();
+  }
 });
 
 $('#tablaAgenda').on('click', '.boton-editar', function(){

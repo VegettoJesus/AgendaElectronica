@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt === false) {
         die(print_r(sqlsrv_errors(), true));
     } else {
-        header("Location: ../vistas/tareas.php");
+        header("Location: {$_SERVER['HTTP_REFERER']}");
         exit();
     }
 }

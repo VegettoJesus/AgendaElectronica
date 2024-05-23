@@ -82,7 +82,21 @@ li a.active, li a:hover{
 .tipoLetra{
     font-family: 'estilo_letra_1';
 }
+.estado-inicio {
+    color: red;
+}
 
+.estado-proceso {
+    color: blue;
+}
+
+.estado-finalizado {
+    color: green;
+}
+
+.estado-ninguno {
+    color: black;
+}
 @media (max-width:952px){
     .enlace{
         padding-left: 20px;

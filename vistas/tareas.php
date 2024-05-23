@@ -54,10 +54,33 @@ if ($result_edicion_tarea === false) {
                 <div class="panel-heading fs-3"> Lista de Tareas </div>
                 <div class="panel-body">
                     <form action="">
-                        <div class="row justify-content-end  mt-3">
-                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-1 ">
-                                <div>
-                                    <button class="btn btn-success mipanel-btn-img-texto" id="btnNuevo" type="button"> Nuevo </button>
+                        <div class="row justify-content-end mt-3">
+                            <div class="col-12 d-flex align-items-center">
+                                <div class="mb-3 me-2">
+                                    <label class="col-form-label">Personal</label>
+                                    <select class="form-select" id="pers" name="pers">
+                                        <option selected value="0">TODOS</option>
+                                        <?php 
+                                        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                                            $personal = $row["Personal"];
+                                            echo "<option value='" . utf8_encode($row["id_Usuario"]) . "'>" . utf8_encode($personal) . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3 me-2">
+                                    <label class="col-form-label">Desde:</label>
+                                    <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaD" id="fechaD">
+                                </div>
+                                <div class="mb-3 me-2">
+                                    <label class="col-form-label">Hasta:</label>
+                                    <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaH" id="fechaH">
+                                </div>
+                                <div class="mt-3 me-2">
+                                    <button class="btn btn-primary" id="btnBuscar" type="button">Buscar</button>
+                                </div>
+                                <div class="mt-3" style="margin-left: auto;">
+                                    <button class="btn btn-success" id="btnNuevo" type="button">Nuevo</button>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +127,7 @@ if ($result_edicion_tarea === false) {
                     <h1 class="modal-title fs-5">Nueva Tarea</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="forRegistrarTarea" action="../controller/registrarTareas.php" method="post" enctype="multipart/form-data">
+                <form id="forRegistrarTarea2" action="../controller/registrarTareas.php" method="post" enctype="multipart/form-data">
                     <div class="modal-body p-4">
                         <div class="justify-content-center">
                             <div >
@@ -191,7 +214,7 @@ if ($result_edicion_tarea === false) {
                     <h1 class="modal-title fs-5">Editar Tarea</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="forEditarTarea" action="../controller/editarTarea.php" method="post" enctype="multipart/form-data">
+                <form id="forEditarTarea2" action="../controller/editarTarea.php" method="post" enctype="multipart/form-data">
                     <div class="modal-body p-4">
                         <div class="justify-content-center">
                             <div >
