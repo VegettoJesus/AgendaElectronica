@@ -17,7 +17,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>Calendario</title>
   </head>
-  <nav>
+    <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
             <i class="fa fa-bars"></i>
@@ -25,11 +25,6 @@ session_start();
         <a href="../vistas/calendarioMisTareas.php" class="enlace"></a>
         <img src="../assets/img/escudo.png" alt="logo" class="logo">
         <b class="nomLogo">AGENDA ELECTRONICA</b>
-        <b class="">
-          <?php 
-          echo $_SESSION["nombres"]." ".$_SESSION["apellidos"];
-          ?>
-        </b>
         <ul>
             <li><a class="active" href="../vistas/calendarioMisTareas.php">Calendario</a></li>
             <li><a href="../vistas/tareas.php">Tareas</a></li>

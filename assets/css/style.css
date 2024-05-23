@@ -29,6 +29,10 @@ nav{
     font-size: 20px;
     font-family: 'estilo_letra_1';
 }
+.mipanel-row-fila{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 nav ul{
     float: right;
     margin-right: 20px;
@@ -119,6 +123,7 @@ li a.active, li a:hover{
         left: -100%;
         text-align: center;
         transform: all .5s;
+        z-index: 99;
     }
     nav ul li{
         display: block;

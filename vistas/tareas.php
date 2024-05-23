@@ -28,7 +28,7 @@ if ($result_edicion_tarea === false) {
 
     <title>Calendario</title>
   </head>
-  <nav>
+    <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
             <i class="fa fa-bars"></i>
@@ -36,11 +36,6 @@ if ($result_edicion_tarea === false) {
         <a href="../vistas/calendarioMisTareas.php" class="enlace"></a>
         <img src="../assets/img/escudo.png" alt="logo" class="logo">
         <b class="nomLogo">AGENDA ELECTRONICA</b>
-        <b class="">
-          <?php 
-          echo $_SESSION["nombres"]." ".$_SESSION["apellidos"];
-          ?>
-        </b>
         <ul>
             <li><a href="../vistas/calendarioMisTareas.php">Calendario</a></li>
             <li><a class="active" href="../vistas/tareas.php">Tareas</a></li>
@@ -54,9 +49,8 @@ if ($result_edicion_tarea === false) {
                 <div class="panel-heading fs-3"> Lista de Tareas </div>
                 <div class="panel-body">
                     <form action="">
-                        <div class="row justify-content-end mt-3">
-                            <div class="col-12 d-flex align-items-center">
-                                <div class="mb-3 me-2">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mipanel-row-fila row-fila">
                                     <label class="col-form-label">Personal</label>
                                     <select class="form-select" id="pers" name="pers">
                                         <option selected value="0">TODOS</option>
@@ -68,21 +62,20 @@ if ($result_edicion_tarea === false) {
                                         ?>
                                     </select>
                                 </div>
-                                <div class="mb-3 me-2">
+                                <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 mipanel-row-fila row-fila">
                                     <label class="col-form-label">Desde:</label>
                                     <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaD" id="fechaD">
                                 </div>
-                                <div class="mb-3 me-2">
+                                <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 mipanel-row-fila row-fila">
                                     <label class="col-form-label">Hasta:</label>
                                     <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaH" id="fechaH">
                                 </div>
-                                <div class="mt-3 me-2">
-                                    <button class="btn btn-primary" id="btnBuscar" type="button">Buscar</button>
+                                <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 mipanel-row-fila row-fila" style="margin-top: 35px;">
+                                    <button class="btn btn-primary mipanel-btn-img-texto btn-block" id="btnBuscar" type="button">Buscar</button>
                                 </div>
-                                <div class="mt-3" style="margin-left: auto;">
-                                    <button class="btn btn-success" id="btnNuevo" type="button">Nuevo</button>
+                                <div class="col-lg-1 col-md-3 col-sm-4 col-xs-4 mipanel-row-fila row-fila" style="margin-top: 35px;">
+                                    <button class="btn btn-success mipanel-btn-img-texto btn-block" id="btnNuevo" type="button">Nuevo</button>
                                 </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-5">

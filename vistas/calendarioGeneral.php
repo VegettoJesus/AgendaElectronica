@@ -25,11 +25,6 @@ session_start();
         <a href="../vistas/calendarioMisTareas.php" class="enlace"></a>
         <img src="../assets/img/escudo.png" alt="logo" class="logo">
         <b class="nomLogo">AGENDA ELECTRONICA</b>
-        <b class="">
-          <?php 
-          echo $_SESSION["nombres"]." ".$_SESSION["apellidos"];
-          ?>
-        </b>
         <ul>
             <li><a class="active" href="../vistas/calendarioMisTareas.php">Calendario</a></li>
             <li><a href="../vistas/tareas.php">Tareas</a></li>
