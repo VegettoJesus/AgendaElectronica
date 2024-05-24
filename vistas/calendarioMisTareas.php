@@ -34,8 +34,8 @@ session_start();
   <body>
     <div class="container">
         <div class="tipo-botones">
-            <button type="input" class="btn btn-primary active" id="button-tareas-mis" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioMisTareas.php" style="color: white;text-decoration-line: none;padding: 8px;">Mis Tareas</a></button>
-            <button type="input" class="btn btn-primary" id="button-tareas-general" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioGeneral.php" style="color: white;text-decoration-line: none;padding: 8px;">General</a></button>
+            <button type="input" class="btn btn-primary active" id="button-tareas-mis" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioMisTareas.php" style="color: white;text-decoration-line: none;padding: 8px;">Ver mis tareas</a></button>
+            <button type="input" class="btn btn-primary" id="button-tareas-general" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioGeneral.php" style="color: white;text-decoration-line: none;padding: 8px;">Ver todas las tareas</a></button>
         </div>
         <div id="calendar"></div>
     </div>

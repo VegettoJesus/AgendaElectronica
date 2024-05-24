@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 $tipo = "GENERAL"; 
 
-$sql = "SELECT Op, titulo, CONVERT(varchar, fechaDesde, 105) AS fechaDesde, CONVERT(varchar, fechaHasta, 105) AS fechaHasta, horaDesde, horaHasta, color FROM tblAgenda WHERE tipo = ?";
+$sql = "SELECT Op, titulo, CONVERT(varchar, fechaDesde, 105) AS fechaDesde, CONVERT(varchar, fechaHasta, 105) AS fechaHasta, horaDesde, horaHasta, color FROM tblAgenda";
 $params = array($tipo);
 $stmt = sqlsrv_query($conn, $sql, $params);
 

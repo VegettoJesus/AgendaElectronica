@@ -17,23 +17,13 @@ $(document).ready(function(){
             $('#modalVisualizarEvento').data('eventId', eventId);
             $('#modalVisualizarEvento').modal('show');
         },
-        selectable: true,
-        selectHelper: true,
-        select: function(start, end) {
-            var startDate = moment(start).format('YYYY-MM-DD');
-            var endDate = moment(end).subtract(1, 'days').format('YYYY-MM-DD');
-
-            var currentTime = moment().format('HH:mm');
-
-            $('#fechaDesde').val(startDate);
-            $('#fechaHasta').val(endDate);
-            $('#horaDesde').val(currentTime);
-
-            $('#modalCalendario').modal('show');
+        views: {
+            listMonth: { buttonText: 'Lista del Mes' }
         },
+        defaultView: 'month',
         locale: 'es',
         header: {
-            left: 'month,agendaWeek,agendaDay,list',
+            left: 'month,agendaWeek,agendaDay,listMonth',
             center: 'title',
             right: 'prev,today,next'
         },
@@ -42,12 +32,24 @@ $(document).ready(function(){
             month: 'Mes',
             week: 'Semana',
             day: 'Día',
-            list: 'Lista'
+            listMonth: 'Lista'
         },
         monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
         dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        dayRender: function(date, cell) {
+            var today =$.fullCalendar.moment()
+            if (date.get('date')==today.get('date')) {
+                cell.css("background-color", "rgb(92, 154, 222)");
+            }
+        },
+        eventAfterAllRender: function(view) {
+            if (view.name === 'agendaWeek' || view.name === 'agendaDay') {
+                $(".fc-today").css("background-color", "rgb(92, 154, 222)");
+            }
+        }
+        
     });
 });
 $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
@@ -73,7 +75,7 @@ $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
             $('#modalVisualizarEvento').find('#horaHastaV').text(agenda.horaHasta);
             $('#modalVisualizarEvento').find('#descripcionV').text(agenda.descripcion);
             $('#modalVisualizarEvento').find('#colorV').css('background-color', agenda.color);
-
+            $('#modalVisualizarEvento').find('#tipoV').text(agenda.tipo);
             $('#modalVisualizarEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
 
 
@@ -86,6 +88,23 @@ $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
                 $('#modalVisualizarEvento').find('#rutaOriginal').show();
                 $('#modalVisualizarEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
                 $('#modalVisualizarEvento').find('#noImagen').remove();
+            }
+
+            var estadoEvento = agenda.estado;
+            $('#modalVisualizarEvento').find('#estadoV').removeClass('estado-inicio estado-proceso estado-finalizado estado-ninguno');
+
+            if (estadoEvento === 1) {
+                valor = "INICIO";
+                $('#modalVisualizarEvento').find('#estadoV').text(valor).addClass('estado-inicio');
+            } else if (estadoEvento === 2) {
+                valor = "EN PROCESO";
+                $('#modalVisualizarEvento').find('#estadoV').text(valor).addClass('estado-proceso');
+            } else if (estadoEvento === 3) {
+                valor = "FINALIZADO";
+                $('#modalVisualizarEvento').find('#estadoV').text(valor).addClass('estado-finalizado');
+            } else {
+                valor = "NINGUNO";
+                $('#modalVisualizarEvento').find('#estadoV').text(valor).addClass('estado-ninguno');
             }
 
             $('#modalVisualizarEvento').modal('show');

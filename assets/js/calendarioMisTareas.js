@@ -23,19 +23,31 @@ $(document).ready(function(){
         selectHelper: true,
         select: function(start, end) {
             var startDate = moment(start).format('YYYY-MM-DD');
-            var endDate = moment(end).subtract(1, 'days').format('YYYY-MM-DD');
+            var endDate;
 
-            var currentTime = moment().format('HH:mm');
+            if ($('#calendar').fullCalendar('getView').type === 'month') {
+                endDate = moment(end).subtract(1, 'days').format('YYYY-MM-DD');
+            } else {
+                endDate = moment(end).format('YYYY-MM-DD');
+            }
+
+            var startTime = moment(start).format('HH:mm');
+            var endTime = moment(end).subtract(1, 'days').format('HH:mm');
 
             $('#fechaDesde').val(startDate);
             $('#fechaHasta').val(endDate);
-            $('#horaDesde').val(currentTime);
+            $('#horaDesde').val(startTime);
+            $('#horaHasta').val(endTime);
 
             $('#modalCalendario').modal('show');
         },
+        views: {
+            listMonth: { buttonText: 'Lista del Mes' }
+        },
+        defaultView: 'month',
         locale: 'es',
         header: {
-            left: 'month,agendaWeek,agendaDay,list',
+            left: 'month,agendaWeek,agendaDay,listMonth',
             center: 'title',
             right: 'prev,today,next'
         },
@@ -44,12 +56,23 @@ $(document).ready(function(){
             month: 'Mes',
             week: 'Semana',
             day: 'Día',
-            list: 'Lista'
+            listMonth: 'Lista'
         },
         monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
         dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+        dayRender: function(date, cell) {
+            var today =$.fullCalendar.moment()
+            if (date.get('date')==today.get('date')) {
+                cell.css("background-color", "rgb(92, 154, 222)");
+            }
+        },
+        eventAfterAllRender: function(view) {
+            if (view.name === 'agendaWeek' || view.name === 'agendaDay') {
+                $(".fc-today").css("background-color", "rgb(92, 154, 222)");
+            }
+        }
     });
 });
 $('#forRegistrarTarea').submit(function(event) {
@@ -91,6 +114,8 @@ $('#forEditarTarea').submit(function(event) {
 });
 
 $('#modalEvento').on('show.bs.modal', function (event) {
+    $('.fc-highlight').remove();
+
     var modal = $(this);
     var eventId = modal.data('eventId');
     $.ajax({

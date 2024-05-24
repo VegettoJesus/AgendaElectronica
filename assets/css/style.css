@@ -101,6 +101,44 @@ li a.active, li a:hover{
 .estado-ninguno {
     color: black;
 }
+.fc-toolbar{
+    background-color: rgb(41, 95, 161);
+    padding: 33px;
+    margin-bottom: 0px !important;
+    color: white;
+}
+.fc .fc-button-group > :first-child{
+    background-color: rgb(51, 120, 162);
+    color: white;
+}
+.fc button{
+    background: rgb(60, 141, 188);
+    color: white;
+}
+.fc th{
+    padding: 14px !important;
+}
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number{
+    font-size: 21px;
+}
+.fc-today{
+    color: white;
+}
+.fc .fc-axis{
+    padding: 14px !important;
+}
+#button-tareas-mis,
+#button-tareas-general {
+    background-color: rgb(59, 119, 192);
+    border: none;
+}
+
+#button-tareas-mis.active,
+#button-tareas-mis:hover,
+#button-tareas-general.active,
+#button-tareas-general:hover {
+    background-color: rgb(72, 159, 212);
+}
 
 @media (max-width:952px){
     .enlace{

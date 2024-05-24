@@ -34,8 +34,8 @@ session_start();
   <body>
     <div class="container">
         <div class="tipo-botones">
-            <button type="input" class="btn btn-primary" id="button-tareas-mis" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioMisTareas.php" style="color: white;text-decoration-line: none;padding: 8px;">Mis Tareas</a></button>
-            <button type="input" class="btn btn-primary active" id="button-tareas-general" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioGeneral.php" style="color: white;text-decoration-line: none;padding: 8px;">General</a></button>
+            <button type="input" class="btn btn-primary" id="button-tareas-mis" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioMisTareas.php" style="color: white;text-decoration-line: none;padding: 8px;">Ver mis tareas</a></button>
+            <button type="input" class="btn btn-primary active" id="button-tareas-general" style="padding-top: 7px;padding-left: 0px; padding-right: 0px;"><a href="../vistas/calendarioGeneral.php" style="color: white;text-decoration-line: none;padding: 8px;">Ver todas las tareas</a></button>
         </div>
         <div id="calendar"></div>
     </div>
@@ -57,6 +57,16 @@ session_start();
                     <div class="justify-content-center">
                         <div >
                             <input type="hidden" id="opV" name="opV">
+                            <div class="mb-3 row">
+                                <div class="col-sm-4">
+                                    <label class="col-sm-2 col-form-label">TIPO:</label>
+                                    <p id="tipoV" name="tipoV"></p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="col-sm-2 col-form-label">ESTADO:</label>
+                                    <p id="estadoV" name="estadoV"></p>
+                                </div>
+                            </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label" style="font-weight: bold;">FECHA</label>
                                 <div class="col-sm-5">
