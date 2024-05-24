@@ -95,13 +95,14 @@ $(document).ready(function() {
 });
 
 $('#forRegistrarTarea2').submit(function(event) {
+  
   var titulo = $('#titulo').val().trim();
   var fechaDesde = $('#fechaDesde').val().trim();
   var fechaHasta = $('#fechaHasta').val().trim();
   var horaDesde = $('#horaDesde').val().trim();
   var horaHasta = $('#horaHasta').val().trim();
-  var tipo = $('#tipo').val().trim();
-  var personal = $('#personal').val().trim();
+  var tipo = $('#tipo').val()
+  var personal = $('#personal').val()
 
   if (titulo === '' || fechaDesde === '' || fechaHasta === '' || horaDesde === '' || horaHasta === '' || tipo === '') {
 
@@ -110,18 +111,19 @@ $('#forRegistrarTarea2').submit(function(event) {
           title: 'Error',
           text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
       });
-      if(tipo === "Personal"){
-        if (personal === ''){
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
-          });
-        }
-        event.preventDefault();
-      }
-
+      
       event.preventDefault();
+  }
+  if(tipo === 'PERSONAL'){
+    if(personal === null){
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, complete el campo "Personal".'
+      });
+      event.preventDefault();
+    }
+    
   }
 });
 $('#forEditarTarea2').submit(function(event) {
@@ -135,22 +137,24 @@ $('#forEditarTarea2').submit(function(event) {
 
   if (titulo === '' || fechaDesde === '' || fechaHasta === '' || horaDesde === '' || horaHasta === '' || tipo === '') {
 
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+    });
+    
+    event.preventDefault();
+  }
+  if(tipo === 'PERSONAL'){
+    if(personal === null){
       Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, complete el campo "Personal".'
       });
-      if(tipo === "Personal"){
-        if (personal === ''){
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Por favor, complete los campos Titulo, Fecha, Hora y Tipo.'
-          });
-        }
-        event.preventDefault();
-      }
       event.preventDefault();
+    }
+    
   }
 });
 

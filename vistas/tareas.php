@@ -2,10 +2,11 @@
 session_start();
 include '../conn/conexion.php';
 $sql = "SELECT id_Usuario, CONCAT(apellidos, ' ', nombres) AS Personal FROM new_usuarios WHERE estado = '0' ORDER BY 2";
-$result = sqlsrv_query($conn, $sql);
-if ($result === false) {
+$result2 = sqlsrv_query($conn, $sql);
+if ($result2 === false) {
     die('Error al ejecutar la consulta: ' . print_r(sqlsrv_errors(), true));
 }
+
 $sql_edicion_tarea = "SELECT id_Usuario, CONCAT(apellidos, ' ', nombres) AS Personal FROM new_usuarios WHERE estado = '0' ORDER BY 2";
 $result_edicion_tarea = sqlsrv_query($conn, $sql_edicion_tarea);
 if ($result_edicion_tarea === false) {
@@ -132,7 +133,7 @@ if ($result_edicion_tarea === false) {
                                 <div class="mb-3 col">
                                     <label class="col-form-label">Tipo</label>
                                     <select class="form-select" id="tipo" name="tipo">
-                                        <option disabled selected>SELECCIONE</option>
+                                        <option value="" selected disabled="true">SELECCIONE</option>
                                         <option value="GENERAL">GENERAL</option>
                                         <option value="PERSONAL">PERSONAL</option>
                                     </select>
@@ -140,9 +141,9 @@ if ($result_edicion_tarea === false) {
                                 <div class="mb-3 col"  id="divPersonal" style="display: none;">
                                     <label class="col-form-label">Personal</label>
                                     <select class="form-select" id="personal" name="personal">
-                                        <option disabled selected value="">SELECCIONE</option>
+                                        <option value="" selected disabled="true">SELECCIONE</option>
                                         <?php 
-                                        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                                        while ($row = sqlsrv_fetch_array($result2, SQLSRV_FETCH_ASSOC)) {
                                             $personal = $row["Personal"];
                                             echo "<option value='" . utf8_encode($row["id_Usuario"]) . "'>" . utf8_encode($personal) . "</option>";
                                         }

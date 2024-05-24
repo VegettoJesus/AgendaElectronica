@@ -63,6 +63,10 @@ session_start();
                                     <p id="tipoV" name="tipoV"></p>
                                 </div>
                                 <div class="col-sm-4">
+                                    <label class="col-sm-2 col-form-label">PERSONAL:</label>
+                                    <p id="personalV" name="personalV"></p>
+                                </div>
+                                <div class="col-sm-4">
                                     <label class="col-sm-2 col-form-label">ESTADO:</label>
                                     <p id="estadoV" name="estadoV"></p>
                                 </div>

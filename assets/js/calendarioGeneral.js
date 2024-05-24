@@ -77,6 +77,8 @@ $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
             $('#modalVisualizarEvento').find('#colorV').css('background-color', agenda.color);
             $('#modalVisualizarEvento').find('#tipoV').text(agenda.tipo);
             $('#modalVisualizarEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
+            var personal = agenda.personal ? agenda.personal : "NINGUNO";
+            $('#modalVisualizarEvento').find('#personalV').text(personal);
 
 
             if (agenda.imagenes.trim() === "") {
