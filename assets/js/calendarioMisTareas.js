@@ -7,6 +7,7 @@ $(document).ready(function(){
             success: function(data) {
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('addEventSource', data);
+                console.log($('#calendar').fullCalendar('removeEvents'))
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching events:", status, error);
@@ -72,6 +73,11 @@ $(document).ready(function(){
             if (view.name === 'agendaWeek' || view.name === 'agendaDay') {
                 $(".fc-today").css("background-color", "rgb(92, 154, 222)");
             }
+        },
+        eventRender: function(event, element) {
+            element.find('.fc-time').hide();
+            element.css('font-weight', 'bold');
+            element.css('text-transform', 'uppercase');
         }
     });
 });
