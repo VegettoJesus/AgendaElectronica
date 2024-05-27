@@ -16,35 +16,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $color = $_POST['color'];
     $estado = $_POST['estado'];
 
-    if($personal!=null && $personal!=""){
-        $principalMkdir = "../assets/imgTareas/".$personal;
-        if( !file_exists($principalMkdir) ){                         
-            mkdir( $principalMkdir , 0777 , true );
+    if ($personal != null && $personal != "") {
+        $imgDir = "../assets/imgTareas/" . $personal;
+        $fileDir = "../assets/archTareas/" . $personal;
+        if (!file_exists($imgDir)) {
+            mkdir($imgDir, 0777, true);
         }
-    }else{
-        $principalMkdir = "../assets/imgTareas/General";
-        if( !file_exists($principalMkdir) ){                         
-            mkdir( $principalMkdir , 0777 , true );
+        if (!file_exists($fileDir)) {
+            mkdir($fileDir, 0777, true);
+        }
+    } else {
+        $imgDir = "../assets/imgTareas/General";
+        $fileDir = "../assets/archTareas/General";
+        if (!file_exists($imgDir)) {
+            mkdir($imgDir, 0777, true);
+        }
+        if (!file_exists($fileDir)) {
+            mkdir($fileDir, 0777, true);
         }
     }
 
+    // Handle image upload
     if (!empty($_FILES['formFile']['name'])) {
-
         $imagen = $_FILES['formFile']['name'];
         $imagenTmp = $_FILES['formFile']['tmp_name'];
-
-        $targetDir = $principalMkdir."/";
-        $targetFile = $targetDir . basename($imagen);
+        $targetFile = $imgDir . "/" . basename($imagen);
         move_uploaded_file($imagenTmp, $targetFile);
         $imagenRuta = $targetFile;
     } else {
         $imagenRuta = '';
     }
 
-    $sql = "INSERT INTO tblAgenda (titulo, tipo, personal, fechaDesde, fechaHasta, horaDesde, horaHasta, descripcion, imagenes, color, estado) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Handle multiple files upload
+    $archivosRutas = array();
+    if (!empty($_FILES['formFiles']['name'][0])) {
+        foreach ($_FILES['formFiles']['tmp_name'] as $key => $tmp_name) {
+            $archivoNombre = $_FILES['formFiles']['name'][$key];
+            $archivoTmp = $_FILES['formFiles']['tmp_name'][$key];
+            $archivoRuta = $fileDir . "/" . basename($archivoNombre);
+            move_uploaded_file($archivoTmp, $archivoRuta);
+            $archivosRutas[] = $archivoRuta;
+        }
+    }
+
+    $archivosRutaStr = empty($archivosRutas) ? '' : implode(",", $archivosRutas);
+
+    $sql = "INSERT INTO tblAgenda (titulo, tipo, personal, fechaDesde, fechaHasta, horaDesde, horaHasta, descripcion, imagenes, color, estado, archivos) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
-    $params = array($titulo, $tipo, $personal, $fechaDesde, $fechaHasta, $horaDesde, $horaHasta, $descripcion, $imagenRuta, $color,$estado);
+    $params = array($titulo, $tipo, $personal, $fechaDesde, $fechaHasta, $horaDesde, $horaHasta, $descripcion, $imagenRuta, $color, $estado, $archivosRutaStr);
     
     $stmt = sqlsrv_query($conn, $sql, $params);
     

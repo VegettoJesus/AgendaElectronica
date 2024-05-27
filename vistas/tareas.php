@@ -7,6 +7,12 @@ if ($result2 === false) {
     die('Error al ejecutar la consulta: ' . print_r(sqlsrv_errors(), true));
 }
 
+$sql2 = "SELECT id_Usuario, CONCAT(apellidos, ' ', nombres) AS Personal FROM new_usuarios WHERE estado = '0' ORDER BY 2";
+$result = sqlsrv_query($conn, $sql);
+if ($result === false) {
+    die('Error al ejecutar la consulta: ' . print_r(sqlsrv_errors(), true));
+}
+
 $sql_edicion_tarea = "SELECT id_Usuario, CONCAT(apellidos, ' ', nombres) AS Personal FROM new_usuarios WHERE estado = '0' ORDER BY 2";
 $result_edicion_tarea = sqlsrv_query($conn, $sql_edicion_tarea);
 if ($result_edicion_tarea === false) {
@@ -126,6 +132,8 @@ if ($result_edicion_tarea === false) {
                         <div class="justify-content-center">
                             <div >
                                 <input type="hidden" id="estado" name="estado">
+                                <input type="hidden" id="formFiles" name="formFiles[]" multiple>
+                                <input type="hidden" id="color" name="color">
                                 <div class="mb-3 col">
                                     <label class="col-form-label">Titulo</label>
                                     <input type="text" class="form-control" name="titulo" id="titulo">
@@ -154,22 +162,22 @@ if ($result_edicion_tarea === false) {
                                     <label class="col-sm-2 col-form-label" style="font-weight: bold;">FECHA</label>
                                     <div class="col-sm-5">
                                         <label class="col-sm-2 col-form-label">Desde:</label>
-                                        <input type="date" class="form-control" name="fechaDesde" id="fechaDesde">
+                                        <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaDesde" id="fechaDesde">
                                     </div>
                                     <div class="col-sm-5">
                                         <label class="col-sm-2 col-form-label">Hasta:</label>
-                                        <input type="date" class="form-control" name="fechaHasta" id="fechaHasta">
+                                        <input type="date" class="form-control" value="<?=date('Y-m-d')?>" name="fechaHasta" id="fechaHasta">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label class="col-sm-2 col-form-label" style="font-weight: bold;">HORA</label>
                                     <div class="col-sm-5">
                                         <label class="col-sm-2 col-form-label">Desde:</label>
-                                        <input type="time" class="form-control" name="horaDesde" id="horaDesde">
+                                        <input type="time" class="form-control" value="00:00" name="horaDesde" id="horaDesde">
                                     </div>
                                     <div class="col-sm-5">
                                         <label class="col-sm-2 col-form-label">Hasta:</label>
-                                        <input type="time" class="form-control" name="horaHasta" id="horaHasta">
+                                        <input type="time" class="form-control" value="23:59" name="horaHasta" id="horaHasta">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -183,12 +191,6 @@ if ($result_edicion_tarea === false) {
                                     <div>
                                         <input class="form-control" type="file" id="formFile" name="formFile">
                                     </div> 
-                                </div>
-                                <div class="mb-3 row">
-                                    <label class="form-label">Color</label>
-                                    <div>
-                                        <input type="color" class="form-control form-control-color" id="color" name="color" value="#563d7c" title="Choose your color">
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +216,8 @@ if ($result_edicion_tarea === false) {
                             <div >
                                 <input type="hidden" id="opE" name="opE">
                                 <input type="hidden" id="rutaOriginal" name="rutaOriginal">
+                                <input type="hidden" id="rutaOriginalArch" name="rutaOriginalArch">
+                                <input type="hidden" id="colorE" name="colorE">
                                 <div class="mb-3 col">
                                     <label class="col-form-label">Titulo</label>
                                     <input type="text" class="form-control" name="tituloE" id="tituloE">
@@ -273,10 +277,6 @@ if ($result_edicion_tarea === false) {
                                     </div> 
                                 </div>
                                 <div class="mb-3 row">
-                                    <div class="col-sm-5">
-                                        <label class="col-sm-2 col-form-label">Color</label>
-                                        <input type="color" class="form-control form-control-color" id="colorE" name="colorE" title="Choose your color">
-                                    </div>
                                     <div class="col-sm-5" id="divEstadoE" style="display: none;">
                                         <label class="col-sm-2 col-form-label">Estado</label>
                                         <select class="form-select" id="estadoE" name="estadoE">

@@ -14,6 +14,8 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>Calendario</title>
   </head>
@@ -52,6 +54,7 @@ session_start();
                             <div >
                                 <input type="hidden" id="estado" name="estado" value="0">
                                 <input type="hidden" id="tipo" name="tipo" value="MIS TAREAS">
+                                <input type="hidden"  id="color" name="color" value="#563d7c">
                                 <input type="hidden" id="personal" name="personal" value="<?php echo $_SESSION['usuario']; ?>">
                                 <div class="mb-3 col">
                                     <label class="col-form-label">Titulo</label>
@@ -91,12 +94,12 @@ session_start();
                                         <input class="form-control" type="file" id="formFile" name="formFile">
                                     </div> 
                                 </div>
-                                <div class="mb-3 row">
+                                <!-- <div class="mb-3 row">
                                     <label class="form-label">Color</label>
                                     <div>
                                         <input type="color" class="form-control form-control-color" id="color" name="color" value="#563d7c" title="Choose your color">
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -167,6 +170,16 @@ session_start();
                                     <img id="rutaOriginal" name="rutaOriginal" style="max-width: 420px; max-height: 420px;">
                                 </div>
                             </div>
+                            <div class="mb-3 row">
+                                <button id="btnDescargarImagen" class="btn btn-warning" style="display: none;">
+                                    <i class="fa fa-download"></i> Descargar Imagen
+                                </button>
+                            </div>
+                            <div class="mb-3 row">
+                                <button id="btnDescargarArchivos" class="btn btn-success" style="display: none;">
+                                    <i class="fa fa-download"></i> Descargar Archivos
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,6 +204,8 @@ session_start();
                             <div >
                                 <input type="hidden" id="opE" name="opE">
                                 <input type="hidden" id="rutaOriginal" name="rutaOriginal">
+                                <input type="hidden" id="rutaOriginalArch" name="rutaOriginalArch">
+                                <input type="hidden"  id="colorE" name="colorE" >
                                 <input type="hidden" id="tipoE" name="tipoE" value="MIS TAREAS">
                                 <input type="hidden" id="personalE" name="personalE" value="<?php echo $_SESSION['usuario']; ?>">
                                 <div class="mb-3 col">
@@ -232,10 +247,12 @@ session_start();
                                     </div> 
                                 </div>
                                 <div class="mb-3 row">
-                                    <div class="col-sm-5">
-                                        <label class="col-sm-2 col-form-label">Color</label>
-                                        <input type="color" class="form-control form-control-color" id="colorE" name="colorE" title="Choose your color">
+                                    <label class="form-label">Archivos:</label>
+                                    <div>
+                                        <input class="form-control" type="file" id="formFilesE" name="formFilesE[]" multiple>
                                     </div>
+                                </div>
+                                <div class="mb-3 row">
                                     <div class="col-sm-5" id="divEstadoE" style="display: none;">
                                         <label class="col-sm-2 col-form-label">Estado</label>
                                         <select class="form-select" id="estadoE" name="estadoE">

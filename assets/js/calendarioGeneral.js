@@ -4,7 +4,6 @@ $(document).ready(function(){
             url: '../controller/getEventosGeneral.php',
             type: 'POST',
             success: function(data) {
-                console.log(data)
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('addEventSource', data);
                 console.log($('#calendar').fullCalendar('removeEvents'))
@@ -55,6 +54,19 @@ $(document).ready(function(){
             element.find('.fc-time').hide();
             element.css('font-weight', 'bold');
             element.css('text-transform', 'uppercase');
+            var estado = '';
+            if (event.estado === 1) {
+                estado = ' - INICIO';
+            } else if (event.estado === 2) {
+                estado = ' - EN PROCESO';
+            } else if (event.estado === 3) {
+                estado = ' - FINALIZADO';
+            } else {
+                estado = '';
+            }
+
+            var estadoElement = $('<span class="estado-evento">' + estado + '</span>');
+            element.find('.fc-title').append(estadoElement);
         }
     });
 });
@@ -89,13 +101,52 @@ $('#modalVisualizarEvento').on('show.bs.modal', function (event) {
 
             if (agenda.imagenes.trim() === "") {
                 $('#modalVisualizarEvento').find('#rutaOriginal').hide();
+                $('#btnDescargarImagen').hide();
                 if ($('#modalVisualizarEvento').find('#noImagen').length === 0) {
                     $('#modalVisualizarEvento').find('#rutaOriginal').after('<p id="noImagen">No contiene imagen</p>');
                 }
             } else {
                 $('#modalVisualizarEvento').find('#rutaOriginal').show();
+                $('#btnDescargarImagen').show();
                 $('#modalVisualizarEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
                 $('#modalVisualizarEvento').find('#noImagen').remove();
+                $('#btnDescargarImagen').click(function() {
+                    var link = document.createElement('a');
+                    link.href = agenda.imagenes.trim(); 
+                    link.download = ''; 
+                    link.target = '_blank'; 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+            }
+
+            if (agenda.archivos !== ""  && agenda.archivos !== null) {
+                $('#btnDescargarArchivos').show();
+                $('#btnDescargarArchivos').on('click', function() {
+                    var archivos = agenda.archivos.split(',');
+                    var zip = new JSZip();
+                
+                    archivos.forEach(function(archivo) {
+                        var nombreArchivo = archivo.substring(archivo.lastIndexOf('/') + 1);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', archivo, true);
+                        xhr.responseType = 'blob';
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                zip.file(nombreArchivo, xhr.response);
+                                if (Object.keys(zip.files).length === archivos.length) {
+                                    zip.generateAsync({ type: 'blob' }).then(function(content) {
+                                        saveAs(content, agenda.titulo + '.zip');
+                                    });
+                                }
+                            }
+                        };
+                        xhr.send();
+                    });
+                });
+            } else {
+                $('#btnDescargarArchivos').hide();
             }
 
             var estadoEvento = agenda.estado;

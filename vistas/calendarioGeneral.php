@@ -15,6 +15,8 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <title>Calendario</title>
   </head>
   <nav>
@@ -104,6 +106,16 @@ session_start();
                                 <div>
                                     <img id="rutaOriginal" name="rutaOriginal" style="max-width: 420px; max-height: 420px;">
                                 </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <button id="btnDescargarImagen" class="btn btn-warning" style="display: none;">
+                                    <i class="fa fa-download"></i> Descargar Imagen
+                                </button>
+                            </div>
+                            <div class="mb-3 row">
+                                <button id="btnDescargarArchivos" class="btn btn-success" style="display: none;">
+                                    <i class="fa fa-download"></i> Descargar Archivos
+                                </button>
                             </div>
                         </div>
                     </div>

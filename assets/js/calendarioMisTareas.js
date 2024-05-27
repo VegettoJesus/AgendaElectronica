@@ -1,5 +1,24 @@
 var mostrarModalEvento = true;
 $(document).ready(function(){
+    $('#estadoE').change(function() {
+        var estado = $(this).val();
+        var color;
+          switch (estado) {
+              case '1':
+                  color = 'red';
+                  break;
+              case '2':
+                  color = '#b9b950';
+                  break;
+              case '3':
+                  color = 'green';
+                  break;
+              default:
+                  color = '#563d7c'; 
+                  break;
+          }
+          $('#colorE').val(color);
+      });
     $('#calendar').fullCalendar({
         events: {
             url: '../controller/getEventos.php',
@@ -78,6 +97,19 @@ $(document).ready(function(){
             element.find('.fc-time').hide();
             element.css('font-weight', 'bold');
             element.css('text-transform', 'uppercase');
+            var estado = '';
+            if (event.estado === 1) {
+                estado = ' - INICIO';
+            } else if (event.estado === 2) {
+                estado = ' - EN PROCESO';
+            } else if (event.estado === 3) {
+                estado = ' - FINALIZADO';
+            } else {
+                estado = '';
+            }
+
+            var estadoElement = $('<span class="estado-evento">' + estado + '</span>');
+            element.find('.fc-title').append(estadoElement);
         }
     });
 });
@@ -152,13 +184,52 @@ $('#modalEvento').on('show.bs.modal', function (event) {
 
             if (agenda.imagenes.trim() === "") {
                 $('#modalEvento').find('#rutaOriginal').hide();
+                $('#btnDescargarImagen').hide();
                 if ($('#modalEvento').find('#noImagen').length === 0) {
                     $('#modalEvento').find('#rutaOriginal').after('<p id="noImagen">No contiene imagen</p>');
                 }
             } else {
                 $('#modalEvento').find('#rutaOriginal').show();
+                $('#btnDescargarImagen').show();
                 $('#modalEvento').find('#rutaOriginal').attr('src', agenda.imagenes);
                 $('#modalEvento').find('#noImagen').remove();
+                $('#btnDescargarImagen').click(function() {
+                    var link = document.createElement('a');
+                    link.href = agenda.imagenes.trim(); 
+                    link.download = ''; 
+                    link.target = '_blank'; 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+            }
+
+            if (agenda.archivos !== "" && agenda.archivos !== null) {
+                $('#btnDescargarArchivos').show();
+                $('#btnDescargarArchivos').on('click', function() {
+                    var archivos = agenda.archivos.split(',');
+                    var zip = new JSZip();
+                
+                    archivos.forEach(function(archivo) {
+                        var nombreArchivo = archivo.substring(archivo.lastIndexOf('/') + 1);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', archivo, true);
+                        xhr.responseType = 'blob';
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                zip.file(nombreArchivo, xhr.response);
+                                if (Object.keys(zip.files).length === archivos.length) {
+                                    zip.generateAsync({ type: 'blob' }).then(function(content) {
+                                        saveAs(content, agenda.titulo + '.zip');
+                                    });
+                                }
+                            }
+                        };
+                        xhr.send();
+                    });
+                });
+            } else {
+                $('#btnDescargarArchivos').hide();
             }
 
             if (agenda.tipo === 'MIS TAREAS') {
@@ -197,8 +268,8 @@ $('#modalEvento').on('show.bs.modal', function (event) {
 
 });
 
+
 $('#btnEditarEvento').click(function() {
-    console.log(mostrarModalEvento)
     if (mostrarModalEvento) {
         $('#modalEvento').modal('hide'); 
         $('#modalEditarEvento').modal('show'); 
@@ -231,6 +302,7 @@ $('#modalEditarEvento').on('show.bs.modal', function (event) {
             $('#modalEditarEvento').find('#horaHastaE').val(agenda.horaHasta);
             $('#modalEditarEvento').find('#descripcionE').val(agenda.descripcion);
             $('#modalEditarEvento').find('#rutaOriginal').val(agenda.imagenes);
+            $('#modalEditarEvento').find('#rutaOriginalArch').val(agenda.archivos);
             $('#modalEditarEvento').find('#colorE').val(agenda.color);
             $('#modalEditarEvento').find('#estadoE').val(agenda.estado);
 
@@ -262,6 +334,7 @@ $('#modalEditarEvento').on('show.bs.modal', function (event) {
             } else {
                 $('#divPersonalE').hide();
                 $('#divEstadoE').hide();
+                $('#colorE').val('#563d7c');
             }
         
             $('#tipoE').on('change', function() {

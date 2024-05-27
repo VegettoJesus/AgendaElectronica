@@ -17,7 +17,8 @@ $sql = "SELECT
     a.descripcion, 
     a.estado,
     a.color,
-    a.imagenes 
+    a.imagenes,
+    a.archivos 
     FROM 
     tblAgenda a
     LEFT JOIN 

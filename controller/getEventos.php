@@ -11,7 +11,7 @@ if (!isset($_SESSION['usuario'])) {
 
 $id_usuario = $_SESSION['usuario']; 
 
-$sql = "SELECT Op, titulo, CONVERT(varchar, fechaDesde, 105) AS fechaDesde, CONVERT(varchar, fechaHasta, 105) AS fechaHasta, horaDesde, horaHasta, color FROM tblAgenda WHERE personal = ?";
+$sql = "SELECT Op, titulo, CONVERT(varchar, fechaDesde, 105) AS fechaDesde, CONVERT(varchar, fechaHasta, 105) AS fechaHasta, horaDesde, horaHasta, color, estado FROM tblAgenda WHERE personal = ?";
 $params = array($id_usuario);
 $stmt = sqlsrv_query($conn, $sql, $params);
 
@@ -32,7 +32,8 @@ if ($stmt === false) {
                 'title' => $row['titulo'],
                 'start' => $fechaDesde->format('Y-m-d') . 'T' . $row['horaDesde'], 
                 'end' => $fechaHasta->format('Y-m-d') . 'T' . $row['horaHasta'], 
-                'color' => $row['color']
+                'color' => $row['color'],
+                'estado' => $row['estado']
             );
 
             array_push($events, $event);

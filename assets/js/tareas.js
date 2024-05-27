@@ -4,11 +4,33 @@ $(document).ready(function() {
     if (selectedTipo === 'PERSONAL') {
         $('#divPersonal').show();
         $('#estado').val(1);
+        $('#color').val('red');
     } else {
         $('#divPersonal').hide();
         $('#personal').val('');
         $('#estado').val(0);
+        $('#color').val('black');
     }
+  });
+
+  $('#estadoE').change(function() {
+    var estado = $(this).val();
+    var color;
+      switch (estado) {
+          case '1':
+              color = 'red';
+              break;
+          case '2':
+              color = '#b9b950';
+              break;
+          case '3':
+              color = 'green';
+              break;
+          default:
+              color = 'black'; 
+              break;
+      }
+      $('#colorE').val(color);
   });
   
   $('#btnNuevo').click(function() {
@@ -69,7 +91,7 @@ $(document).ready(function() {
                                 estado = "<span style='color: red;'>INICIO</span>";
                                 break;
                             case 2:
-                                estado = "<span style='color: blue;'>EN PROCESO</span>";
+                                estado = "<span style='color: #b9b950;'>EN PROCESO</span>";
                                 break;
                             case 3:
                                 estado = "<span style='color: green;'>FINALIZADO</span>";
@@ -184,6 +206,7 @@ $('#tablaAgenda').on('click', '.boton-editar', function(){
           $('#modalEditar').find('#rutaOriginal').val(agenda.imagenes);
           $('#modalEditar').find('#colorE').val(agenda.color);
           $('#modalEditar').find('#estadoE').val(agenda.estado);
+          $('#modalEditar').find('#rutaOriginalArch').val(agenda.archivos);
 
           if (agenda.tipo === 'PERSONAL') {
             $('#divPersonalE').show();
@@ -265,3 +288,5 @@ $('#tablaAgenda').on('click', '.boton-eliminar', function() {
     }
   });
 });
+
+
