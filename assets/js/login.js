@@ -1,14 +1,17 @@
-const pass= document.getElementById("pass")
-const icon = document.querySelector(".bx")
+document.addEventListener("DOMContentLoaded", function() {
+    const pass = document.getElementById("pass");
+    const togglePassword = document.getElementById("togglePassword");
 
-icon.addEventListener("click", e=> {
-    if(pass.type === "password"){
-        pass.type = "text"
-        icon.classList.remove('fa-eye')
-        icon.classList.add('fa-eye-slash')
-    }else{
-        pass.type = "password"
-        icon.classList.add('fa-eye')
-        icon.classList.remove('fa-eye-slash')
-    }
-})
+    togglePassword.addEventListener("click", function() {
+      const type = pass.getAttribute("type") === "password" ? "text" : "password";
+      pass.setAttribute("type", type);
+      
+      if (type === "text") {
+        togglePassword.classList.remove('fa-eye-slash');
+        togglePassword.classList.add('fa-eye');
+      } else {
+        togglePassword.classList.add('fa-eye-slash');
+        togglePassword.classList.remove('fa-eye');
+      }
+    });
+  });

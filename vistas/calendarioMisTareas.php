@@ -1,5 +1,9 @@
 <?php 
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -91,7 +95,7 @@ session_start();
                                 <div class="mb-3 row">
                                     <label class="form-label">Imagen:</label>
                                     <div>
-                                        <input class="form-control" type="file" id="formFile" name="formFile">
+                                        <input class="form-control archivosAdjuntar" type="file" id="formFile" name="formFile">
                                     </div> 
                                 </div>
                                 <!-- <div class="mb-3 row">
@@ -243,7 +247,7 @@ session_start();
                                 <div class="mb-3 row">
                                     <label class="form-label">Imagen:</label>
                                     <div>
-                                        <input class="form-control" type="file" id="formFileE" name="formFileE">
+                                        <input class="form-control archivosAdjuntar" type="file" id="formFileE" name="formFileE">
                                     </div> 
                                 </div>
                                 <div class="mb-3 row">

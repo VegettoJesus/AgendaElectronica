@@ -1,6 +1,6 @@
 <?php
 // Configuración de la conexión
-$serverName = "192.168.10.125"; // Puede ser una dirección IP o el nombre del servidor
+$serverName = "192.168.10.1"; // Puede ser una dirección IP o el nombre del servidor
 $connectionOptions = array(
     "Database" => "insttel", // Nombre de la base de datos
     "Uid" => "sa", // Usuario de la base de datos

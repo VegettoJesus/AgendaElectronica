@@ -139,6 +139,9 @@ li a.active, li a:hover{
 #button-tareas-general:hover {
     background-color: rgb(72, 159, 212);
 }
+.fc-past{
+    background-color: transparent !important;
+}
 
 @media (max-width:952px){
     .enlace{

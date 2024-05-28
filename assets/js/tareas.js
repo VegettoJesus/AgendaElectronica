@@ -116,6 +116,38 @@ $(document).ready(function() {
 
 });
 
+$(".archivosAdjuntar").change(function () {
+
+  let archivo = $(this)[0].files[0];
+  if (archivo === undefined) {
+      $(this).val(null);
+      return;
+  }
+
+  const extension = archivo["name"].split(".")[archivo["name"].split(".").length - 1];
+
+  if(extension === "jpg" || extension === "png"){
+      if (archivo.size <= 1048576) {
+          Notiflix.Notify.Success('IMAGEN ACEPTADA');
+      } else {
+          $(this).val(null);
+          Swal.fire({
+            icon: 'error',
+            title: 'AVISO',
+            text: 'EL ARCHIVO DEBE PESAR MÁXIMO 1MB.'
+          });
+      }
+  }else{
+      $(this).val(null);
+      Swal.fire({
+        icon: 'warning',
+        title: 'AVISO',
+        text: 'SOLO SE ACEPTA FORMATO JPG y PNG.'
+      });
+      return;
+  }
+})
+
 $('#forRegistrarTarea2').submit(function(event) {
   
   var titulo = $('#titulo').val().trim();

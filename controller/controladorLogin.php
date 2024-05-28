@@ -1,5 +1,10 @@
 <?php 
-include '../conn/conexion.php';
+if (file_exists('../conn/conexion.php')) {
+    include '../conn/conexion.php';
+} 
+elseif (file_exists('conn/conexion.php')) {
+    include 'conn/conexion.php';
+} 
 session_start();
 if(isset($_POST["btnIngresar"])){ 
     $usuario = isset($_POST["user"]) ? $_POST["user"] : '';
@@ -19,19 +24,17 @@ if(isset($_POST["btnIngresar"])){
             $_SESSION['usuario'] = $row['id_usuario'];
             $_SESSION['nombres'] = $row['nombres'];
             $_SESSION['apellidos'] = $row['apellidos'];
-            header("Location: calendarioMisTareas.php");
+            header("Location: vistas/calendarioMisTareas.php");
             exit();
         } else {
             header("Location: login.php?error=access_denied");
             exit();
-            
         }
     
         sqlsrv_free_stmt($stmt);
     } else {
         header("Location: login.php?error=empty_fields");
         exit();
-        
     }
 }
 ?>

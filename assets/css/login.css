@@ -144,6 +144,26 @@ body{
     color: #ffffff;
 }
 
+.input-group-text {
+    cursor: pointer;
+  }
+  .inputs {
+    position: relative;
+  }
+  .inputs i.fa-eye,
+  .inputs i.fa-eye-slash {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-211%);
+    cursor: pointer;
+    -webkit-transform: translateY(-211%);
+    -moz-transform: translateY(-211%);
+    -ms-transform: translateY(-211%);
+    -o-transform: translateY(-211%);
+    color: #097EF6;
+}
+
 @media(max-width:990px){
     .container{
         width: 350px;

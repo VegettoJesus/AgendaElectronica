@@ -1,5 +1,9 @@
 <?php 
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
 include '../conn/conexion.php';
 $sql = "SELECT id_Usuario, CONCAT(apellidos, ' ', nombres) AS Personal FROM new_usuarios WHERE estado = '0' ORDER BY 2";
 $result2 = sqlsrv_query($conn, $sql);
@@ -189,7 +193,7 @@ if ($result_edicion_tarea === false) {
                                 <div class="mb-3 row">
                                     <label class="form-label">Imagen:</label>
                                     <div>
-                                        <input class="form-control" type="file" id="formFile" name="formFile">
+                                        <input class="form-control archivosAdjuntar" type="file" id="formFile" name="formFile">
                                     </div> 
                                 </div>
                             </div>
@@ -273,7 +277,7 @@ if ($result_edicion_tarea === false) {
                                 <div class="mb-3 row">
                                     <label class="form-label">Imagen:</label>
                                     <div>
-                                        <input class="form-control" type="file" id="formFileE" name="formFileE">
+                                        <input class="form-control archivosAdjuntar" type="file" id="formFileE" name="formFileE">
                                     </div> 
                                 </div>
                                 <div class="mb-3 row">
